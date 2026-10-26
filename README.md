@@ -166,7 +166,7 @@ python scripts/correct_illumination.py batch \
 
 ---
 
-## ⚠️ Limitations (`局限性`)
+## ⚠️ Limitations 
 
 1. **Multiplicative Model Assumptions (Mode A & Mode B)**: The flat-field division model assumes a **linear photon response** ($I = L \cdot T + D$), identical optical path (same objective, filters, focus, and camera ROI/binning), and absence of stray glare. If the flat-field reference $F$ contains dust motes, air bubbles, or sensor saturation, Mode A will imprint inverse artifacts onto the corrected image.
 2. **8-Bit Gamma Encoding (`GAMMA_ENCODED_8BIT`)**: Standard 8-bit PNG/JPEG and color camera files are typically gamma-encoded (sRGB) rather than linear. Applying multiplicative gains in gamma-encoded space is an approximation and is flagged in the QC report.
