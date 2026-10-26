@@ -1,0 +1,78 @@
+{
+  "q1_16bit_to_8bit": {
+    "input_dtype": "uint16",
+    "input_shape": [
+      256,
+      256
+    ],
+    "input_min_max": [
+      4000,
+      62000
+    ],
+    "loaded_dtype": "uint8",
+    "loaded_shape": [
+      256,
+      256,
+      3
+    ],
+    "loaded_min_max": [
+      15,
+      242
+    ],
+    "saved_output_dtype": "uint8",
+    "unique_levels_input_16bit": 4097,
+    "unique_levels_after_imread": 190,
+    "unique_levels_after_correction": 182,
+    "information_levels_lost_pct": 95.36
+  },
+  "q2_clipping_and_quantization": {
+    "total_pixels_clipped_at_255_pct": 3.271,
+    "highlight_patch_clipped_at_255_pct": 100.0,
+    "uniform_input_50_target_220_output": 219,
+    "truncation_bias_lsb": 1
+  },
+  "q3_halo_and_contrast_loss": {
+    "true_bg": 200.0,
+    "true_fg": 60.0,
+    "ideal_scaled_fg": 66.0,
+    "corrected_fg_mean": 81.9,
+    "fg_intensity_distortion_pct": 24.09,
+    "true_weber_contrast": 0.7,
+    "corrected_far_bg_mean": 224.1,
+    "corrected_weber_contrast": 0.6346,
+    "contrast_retention_pct": 90.65,
+    "halo_ring_mean_intensity": 252.33,
+    "halo_ring_max_intensity": 255,
+    "halo_overshoot_above_target_pct": 14.69
+  },
+  "q4_per_channel_color_shift": {
+    "raw_bg_mean_BGR": [
+      176.0,
+      198.0,
+      220.0
+    ],
+    "corr_bg_mean_BGR": [
+      230.57,
+      232.39,
+      221.62
+    ],
+    "raw_bg_R_over_B_ratio": 1.25,
+    "corr_bg_R_over_B_ratio": 0.9612,
+    "bg_R_over_B_shift_pct": 23.11,
+    "raw_droplet_mean_BGR": [
+      80.0,
+      70.0,
+      196.0
+    ],
+    "corr_droplet_mean_BGR": [
+      113.51,
+      90.56,
+      200.43
+    ],
+    "raw_droplet_R_over_G_ratio": 2.8,
+    "corr_droplet_R_over_G_ratio": 2.2133,
+    "droplet_R_over_G_shift_pct": 20.95,
+    "raw_droplet_R_minus_G": 126.0,
+    "corr_droplet_R_minus_G": 109.87
+  }
+}
