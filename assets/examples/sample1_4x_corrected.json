@@ -1,0 +1,175 @@
+{
+  "software_version": "2.0.0-rigorous",
+  "source_path": "C:\\Users\\FROST GU\\.gemini\\config\\skills\\microscopy-flatfield-correction\\assets\\examples\\sample1_4x_raw.png",
+  "mode": "pseudo-flat-field",
+  "parameters": {
+    "mode": "pseudo-flat-field",
+    "method_description": "pseudo-flat-field (approximate low-frequency background estimation, not instrument flat-field calibration)",
+    "bg_method": "masked_gaussian",
+    "sigma_px": 75.0,
+    "sigma_source": "explicit_sigma_px",
+    "per_channel": false,
+    "color_gain_mode": "shared_luminance_gain",
+    "target_val_overridden": false,
+    "target_values_used": [
+      201.564453125
+    ],
+    "min_bg_rel": 0.01,
+    "max_gain": 4.0,
+    "border_mode": "reflect",
+    "modality": "brightfield",
+    "force": false
+  },
+  "input_summary": {
+    "dtype": "uint8",
+    "bit_depth": 8,
+    "detected_12bit_in_16bit_container": false,
+    "shape": [
+      771,
+      1024,
+      3
+    ],
+    "channels": 3,
+    "has_alpha": false,
+    "min": 56.0,
+    "max": 255.0,
+    "median": 202.0,
+    "saturated_pixel_fraction": 0.028789
+  },
+  "output_summary": {
+    "dtype": "uint8",
+    "shape": [
+      771,
+      1024,
+      3
+    ],
+    "channels": 3,
+    "min": 74.0,
+    "max": 255.0,
+    "median": 209.0,
+    "saturated_pixel_fraction": 4.1e-05,
+    "clipped_low_count": 0,
+    "clipped_high_count": 93,
+    "clipped_low_fraction": 0.0,
+    "clipped_high_fraction": 3.9e-05,
+    "clipped_total_fraction": 3.9e-05
+  },
+  "background_uniformity_independent_grid": {
+    "measurement_method": "Coarse 8x8 block medians computed strictly on background pixels identified by an independent Otsu/percentile mask (or ground-truth mask), never using the correction background surface.",
+    "before": {
+      "grid_shape": [
+        8,
+        8
+      ],
+      "num_valid_blocks": 64,
+      "block_median_min": 138.0,
+      "block_median_max": 250.0,
+      "block_median_mean": 213.344,
+      "cv": 0.12776,
+      "max_min_ratio": 1.8116,
+      "center_block_median": 220.0,
+      "corner_min_median": 138.0,
+      "corner_mean_median": 189.417,
+      "corner_max_drop_pct": 37.27
+    },
+    "after": {
+      "grid_shape": [
+        8,
+        8
+      ],
+      "num_valid_blocks": 64,
+      "block_median_min": 207.333,
+      "block_median_max": 225.0,
+      "block_median_mean": 216.06,
+      "cv": 0.02167,
+      "max_min_ratio": 1.0852,
+      "center_block_median": 216.333,
+      "corner_min_median": 210.333,
+      "corner_mean_median": 216.833,
+      "corner_max_drop_pct": 2.77
+    },
+    "cv_reduction_pct": 83.04
+  },
+  "gain_distribution": {
+    "min": 0.84262,
+    "p1": 0.84398,
+    "median": 1.0,
+    "p99": 1.60397,
+    "max": 1.88787,
+    "exceeded_max_gain_fraction": 0.0,
+    "protected_low_bg_or_invalid_denom_fraction": 0.0
+  },
+  "channel_ratio_analysis": {
+    "background_region": {
+      "pixel_count": 496475,
+      "before": {
+        "mean_RGB": [
+          221.853,
+          219.869,
+          218.36
+        ],
+        "R_over_G": 1.00902,
+        "B_over_G": 0.99314,
+        "R_over_B": 1.016
+      },
+      "after": {
+        "mean_RGB": [
+          214.805,
+          212.73,
+          210.976
+        ],
+        "R_over_G": 1.00975,
+        "B_over_G": 0.99175,
+        "R_over_B": 1.01815
+      },
+      "R_over_G_rel_shift_pct": 0.0723,
+      "B_over_G_rel_shift_pct": 0.14,
+      "R_over_B_rel_shift_pct": 0.2116,
+      "max_ratio_rel_shift_pct": 0.2116
+    },
+    "foreground_region": {
+      "pixel_count": 293029,
+      "before": {
+        "mean_RGB": [
+          169.917,
+          158.948,
+          161.402
+        ],
+        "R_over_G": 1.06901,
+        "B_over_G": 1.01544,
+        "R_over_B": 1.05276
+      },
+      "after": {
+        "mean_RGB": [
+          189.858,
+          177.701,
+          179.824
+        ],
+        "R_over_G": 1.06842,
+        "B_over_G": 1.01195,
+        "R_over_B": 1.0558
+      },
+      "R_over_G_rel_shift_pct": 0.0552,
+      "B_over_G_rel_shift_pct": 0.3437,
+      "R_over_B_rel_shift_pct": 0.2888,
+      "max_ratio_rel_shift_pct": 0.3437
+    }
+  },
+  "stain_quantification_caution": "CAUTION (Oil Red O / DAB-IHC / H&E Stained Images): Illumination correction alters pixel intensities and can shift color segmentation thresholds, positive stained area percentages, and integrated optical density / staining intensity. Mode B (pseudo-flat-field) outputs are approximations for visual uniformity and should NOT be used for quantitative intensity claims unless independently validated against physical flat-field calibration standards.",
+  "warnings": [
+    {
+      "code": "GAMMA_ENCODED_8BIT",
+      "message": "8-bit input detected: standard 8-bit images are commonly gamma-encoded (sRGB), whereas multiplicative illumination models assume linear sensor response."
+    },
+    {
+      "code": "STAIN_QUANTIFICATION_CAUTION",
+      "message": "CAUTION (Oil Red O / DAB-IHC / H&E Stained Images): Illumination correction alters pixel intensities and can shift color segmentation thresholds, positive stained area percentages, and integrated optical density / staining intensity. Mode B (pseudo-flat-field) outputs are approximations for visual uniformity and should NOT be used for quantitative intensity claims unless independently validated against physical flat-field calibration standards."
+    }
+  ],
+  "diagnostics": {
+    "foreground_excluded_fraction": 0.0,
+    "low_bg_protected_fraction": 0.0,
+    "capped_gain_fraction": 0.0
+  },
+  "output_path": "C:\\Users\\FROST GU\\.gemini\\config\\skills\\microscopy-flatfield-correction\\assets\\examples\\sample1_4x_corrected.png"
+}
