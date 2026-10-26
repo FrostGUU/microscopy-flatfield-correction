@@ -1,0 +1,140 @@
+{
+  "seed": 12345,
+  "image_shape": [
+    384,
+    384
+  ],
+  "scenarios": {
+    "cos4_vignetting": {
+      "legacy_8bit_per_channel_gaussian": {
+        "output_dtype": "uint8",
+        "bg_median_level": 224.0,
+        "bg_median_rel_error_pct": 7.589,
+        "bg_p95_rel_error_pct": 16.518,
+        "target_mean_rel_error_pct": 20.793,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5128,
+        "contrast_retention_pct": 85.47,
+        "halo_overshoot_pct": 13.839
+      },
+      "new_mode_b_naive_gaussian_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 31025.0,
+        "bg_median_rel_error_pct": 7.6,
+        "bg_p95_rel_error_pct": 19.484,
+        "target_mean_rel_error_pct": 19.619,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5193,
+        "contrast_retention_pct": 86.55,
+        "halo_overshoot_pct": 19.968
+      },
+      "new_mode_b_masked_gaussian_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 31073.0,
+        "bg_median_rel_error_pct": 0.515,
+        "bg_p95_rel_error_pct": 4.612,
+        "target_mean_rel_error_pct": 0.138,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5973,
+        "contrast_retention_pct": 99.55,
+        "halo_overshoot_pct": 0.201
+      },
+      "negative_control_small_sigma_10px": {
+        "output_dtype": "uint16",
+        "bg_median_level": 30173.0,
+        "bg_median_rel_error_pct": 0.447,
+        "bg_p95_rel_error_pct": 2.327,
+        "target_mean_rel_error_pct": 75.232,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.3018,
+        "contrast_retention_pct": 50.29,
+        "halo_overshoot_pct": 5.477
+      },
+      "new_mode_a_true_flatfield_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 31125.0,
+        "bg_median_rel_error_pct": 0.549,
+        "bg_p95_rel_error_pct": 1.639,
+        "target_mean_rel_error_pct": 0.024,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5999,
+        "contrast_retention_pct": 99.99,
+        "halo_overshoot_pct": -0.007
+      }
+    },
+    "tilted_plane": {
+      "legacy_8bit_per_channel_gaussian": {
+        "output_dtype": "uint8",
+        "bg_median_level": 224.0,
+        "bg_median_rel_error_pct": 1.786,
+        "bg_p95_rel_error_pct": 8.036,
+        "target_mean_rel_error_pct": 12.112,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5541,
+        "contrast_retention_pct": 92.36,
+        "halo_overshoot_pct": 10.301
+      },
+      "new_mode_b_naive_gaussian_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 38481.0,
+        "bg_median_rel_error_pct": 1.614,
+        "bg_p95_rel_error_pct": 8.23,
+        "target_mean_rel_error_pct": 11.13,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5585,
+        "contrast_retention_pct": 93.08,
+        "halo_overshoot_pct": 10.514
+      },
+      "new_mode_b_masked_gaussian_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 39808.0,
+        "bg_median_rel_error_pct": 0.342,
+        "bg_p95_rel_error_pct": 0.995,
+        "target_mean_rel_error_pct": 0.039,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.5999,
+        "contrast_retention_pct": 99.98,
+        "halo_overshoot_pct": 0.031
+      },
+      "negative_control_small_sigma_10px": {
+        "output_dtype": "uint16",
+        "bg_median_level": 38948.0,
+        "bg_median_rel_error_pct": 0.372,
+        "bg_p95_rel_error_pct": 1.677,
+        "target_mean_rel_error_pct": 75.198,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.3021,
+        "contrast_retention_pct": 50.34,
+        "halo_overshoot_pct": 5.354
+      },
+      "new_mode_a_true_flatfield_16bit": {
+        "output_dtype": "uint16",
+        "bg_median_level": 39810.0,
+        "bg_median_rel_error_pct": 0.485,
+        "bg_p95_rel_error_pct": 1.407,
+        "target_mean_rel_error_pct": 0.007,
+        "true_weber_contrast": 0.6,
+        "measured_weber_contrast": 0.6,
+        "contrast_retention_pct": 100.0,
+        "halo_overshoot_pct": 0.007
+      }
+    }
+  },
+  "rgb_color_ratio_benchmark": {
+    "legacy_per_channel_target220": {
+      "bg_R_over_G_error_pct": 10.992,
+      "bg_R_over_B_error_pct": 21.534,
+      "fg_droplet_R_over_G_error_pct": 18.692
+    },
+    "new_mode_b_per_channel_flag": {
+      "bg_R_over_G_error_pct": 8.935,
+      "bg_R_over_B_error_pct": 20.021,
+      "fg_droplet_R_over_G_error_pct": 8.828
+    },
+    "new_mode_b_shared_luminance_default": {
+      "bg_R_over_G_error_pct": 0.001,
+      "bg_R_over_B_error_pct": 0.006,
+      "fg_droplet_R_over_G_error_pct": 0.094
+    }
+  }
+}
