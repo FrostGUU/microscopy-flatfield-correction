@@ -50,11 +50,11 @@ def detect_dark_background_or_fluorescence(arr: np.ndarray, bit_depth: int, dete
     """
     lum = arr.mean(axis=2) if arr.ndim == 3 else arr.astype(np.float32)
     med = float(np.median(lum))
-    p99 = float(np.percentile(lum, 99.0))
+    p995 = float(np.percentile(lum, 99.5))
     p10 = float(np.percentile(lum, 10.0))
     nominal_full = 4095.0 if detected_12bit else (65535.0 if bit_depth == 16 else 255.0)
 
-    if med < 0.12 * nominal_full and p99 > max(2.2 * med, p10 + 0.05 * nominal_full):
+    if med < 0.12 * nominal_full and p995 > max(2.2 * med, p10 + 0.05 * nominal_full):
         return True
     return False
 
@@ -87,20 +87,36 @@ def _fit_robust_polynomial_trend(
     if z.size <= len(exponents):
         return np.full_like(field_2d, float(np.median(field_2d)), dtype=np.float32)
 
-    weights = np.ones_like(z, dtype=np.float64)
+    # Pre-filter each coarse 16x16 block to its upper-half [60th, 98th] percentile pixels
+    # so medium-gray cytoplasm or dense cell colonies never pull down the polynomial trend
+    gh, gw = min(16, max(4, h // 16)), min(16, max(4, w // 16))
+    bh, bw = h // gh, w // gw
+    candidate_mask = np.ones((h, w), dtype=bool)
+    for iy in range(gh):
+        y0, y1 = iy * bh, (h if iy == gh - 1 else (iy + 1) * bh)
+        for ix in range(gw):
+            x0, x1 = ix * bw, (w if ix == gw - 1 else (ix + 1) * bw)
+            patch = field_2d[y0:y1, x0:x1]
+            p60 = float(np.percentile(patch, 60.0))
+            p99 = float(np.percentile(patch, 99.0))
+            if p99 - p60 > 2.5 * sigma_noise:
+                candidate_mask[y0:y1, x0:x1] = (patch >= p60) & (patch <= p99)
+
+    sub_cand = candidate_mask[0:h:sy, 0:w:sx].ravel()
+    weights = np.where(sub_cand, 1.0, 0.05).astype(np.float64)
     coeffs = np.zeros(len(exponents), dtype=np.float64)
     for _ in range(n_iter):
         Aw = A * weights[:, None]
         coeffs, _, _, _ = np.linalg.lstsq(Aw, z * weights, rcond=None)
         pred = A @ coeffs
         res = z - pred
-        med_res = float(np.median(res))
+        med_res = float(np.median(res[sub_cand])) if np.any(sub_cand) else float(np.median(res))
         mad_scale = float(1.4826 * np.median(np.abs(res - med_res)))
         scale = max(sigma_noise, mad_scale, 0.01 * max(float(np.median(pred)), 1.0))
 
-        w_new = np.ones_like(res)
-        dark = res < (-2.0 * scale)
-        w_new[dark] = np.exp(-((res[dark] / (2.0 * scale)) ** 2)) * 0.04
+        w_new = np.where(sub_cand, 1.0, 0.05)
+        dark = res < (-1.8 * scale)
+        w_new[dark] = np.exp(-((res[dark] / (1.8 * scale)) ** 2)) * 0.02
         bright = res > (3.5 * scale)
         w_new[bright] = 0.0
         if np.sum(w_new) < len(exponents) + 2:
@@ -325,6 +341,7 @@ def pseudo_flatfield_correct_mode_b(
         cap_masks: List[np.ndarray] = []
         corr_channels: List[np.ndarray] = []
         target_values = []
+        common_default_t = float(np.median(raw_f.mean(axis=2)))
 
         for c in range(3):
             ch = raw_f[:, :, c]
@@ -340,8 +357,7 @@ def pseudo_flatfield_correct_mode_b(
             else:
                 thresh = min_bg_rel * max_bg
                 low_c = bg_c <= thresh
-                valid_bg = bg_c[~low_c]
-                t_val = float(target_val) if target_val is not None else (float(np.median(valid_bg)) if valid_bg.size > 0 else max_bg)
+                t_val = float(target_val) if target_val is not None else common_default_t
                 safe_bg = np.where(low_c, 1.0, bg_c)
                 raw_gain = np.where(low_c, 1.0, t_val / safe_bg)
                 cap_c = (~low_c) & (raw_gain > max_gain)

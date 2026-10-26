@@ -358,6 +358,11 @@ def write_image_and_metadata(
     sidecar_path: Optional[str] = None
 
     if ext in (".tif", ".tiff"):
+        # Include top-level 'shape' so tifffile's shaped_description parser succeeds,
+        # and use ensure_ascii=True because TIFF 6.0 ImageDescription requires 7-bit ASCII.
+        tiff_meta = {"shape": list(arr.shape)}
+        tiff_meta.update(metadata)
+        tiff_desc_ascii = json.dumps(tiff_meta, ensure_ascii=True, indent=2)
         photometric = "rgb" if (arr.ndim == 3 and arr.shape[2] in (3, 4)) else "minisblack"
         extrasamples = [tifffile.EXTRASAMPLE.UNASSALPHA] if (arr.ndim == 3 and arr.shape[2] == 4) else None
         with open(fpath, "wb") as fobj:
@@ -367,14 +372,14 @@ def write_image_and_metadata(
                     arr,
                     photometric=photometric,
                     extrasamples=extrasamples,
-                    description=meta_json_str,
+                    description=tiff_desc_ascii,
                 )
             else:
                 tifffile.imwrite(
                     fobj,
                     arr,
                     photometric=photometric,
-                    description=meta_json_str,
+                    description=tiff_desc_ascii,
                 )
         if write_sidecar_for_tiff:
             sidecar_path = os.path.splitext(fpath)[0] + ".json"
