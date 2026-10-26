@@ -87,8 +87,14 @@ python scripts/correct_illumination.py single [OPTIONS]
 | **40x / 100x** | High-power | `40` | Subtle lens center-to-edge falloff. |
 
 ### Formula
-$$I_{bg}(x, y) = \text{GaussianBlur}(I(x, y), \sigma)$$
-$$I_{corrected}(x, y) = \text{clip}\left(\frac{I(x, y)}{I_{bg}(x, y) + 10^{-5}} \times \text{target\_val}, 0, 255\right)$$
+
+$$
+I_{\mathrm{bg}}(x, y) = \mathrm{GaussianBlur}\bigl(I(x, y),\ \sigma\bigr)
+$$
+
+$$
+I_{\mathrm{corrected}}(x, y) = \mathrm{clip}\left(\frac{I(x, y)}{I_{\mathrm{bg}}(x, y) + 10^{-5}} \times I_{\mathrm{target}},\ 0,\ 255\right)
+$$
 
 ## Common Mistakes
 

@@ -27,11 +27,15 @@ An AI Agent Skill & standalone CLI tool for **adaptive pseudo flat-field illumin
 
 ## 📐 Mathematical Principle
 
-For each color channel $c \in \{R, G, B\}$, the low-frequency illumination background is estimated via a large-kernel Gaussian filter and normalized to the target baseline intensity:
+For each color channel $c \in \lbrace R, G, B \rbrace$, the low-frequency illumination background is estimated via a large-kernel Gaussian filter and normalized to the target baseline intensity ($I_{\mathrm{target}} = 220.0$):
 
-$$I_{\text{bg}}(x, y) = \text{GaussianBlur}(I(x, y), \sigma)$$
+$$
+I_{\mathrm{bg}}(x, y) = \mathrm{GaussianBlur}\bigl(I(x, y),\ \sigma\bigr)
+$$
 
-$$I_{\text{corrected}}(x, y) = \text{clip}\left(\frac{I(x, y)}{I_{\text{bg}}(x, y) + 10^{-5}} \times \text{target\_val},\ 0,\ 255\right)$$
+$$
+I_{\mathrm{corrected}}(x, y) = \mathrm{clip}\left(\frac{I(x, y)}{I_{\mathrm{bg}}(x, y) + 10^{-5}} \times I_{\mathrm{target}},\ 0,\ 255\right)
+$$
 
 ### Recommended Sigma by Objective Magnification
 
